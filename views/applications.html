@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Applications</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <h1>All Applications</h1>
+  <div id="applications"></div>
+
+  <h1>Contact Messages</h1>
+  <div id="contacts"></div>
+
+  <script>
+    fetch('/data')
+      .then(res => res.json())
+      .then(data => {
+        const appDiv = document.getElementById('applications');
+        const contactDiv = document.getElementById('contacts');
+
+        data.applications.forEach(app => {
+          const div = document.createElement('div');
+          div.innerHTML = `<p><strong>${app.name}</strong> (${app.email}) applied for <em>${app.position}</em></p><p>${app.message}</p><hr>`;
+          appDiv.appendChild(div);
+        });
+
+        data.contacts.forEach(msg => {
+          const div = document.createElement('div');
+          div.innerHTML = `<p><strong>${msg.name}</strong> (${msg.email})</p><p>${msg.message}</p><hr>`;
+          contactDiv.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
